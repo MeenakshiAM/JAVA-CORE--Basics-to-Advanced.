@@ -14,16 +14,18 @@ class Worker1 implements Runnable {
     @Override
     public void run() {
 
-        lockA.lock();
+        lockA.lock();// lock A is the thing that is actually done by the worker 1
+        // lock A ensures to lock the changeable part ot the shared part currently accuired
 
         try {
             System.out.println("Worker-1 acquired Lock A");
 
             Thread.sleep(1000);
 
-            System.out.println("Worker-1 trying to acquire Lock B");
+            System.out.println("Worker-1 trying to acquire Lock B"); // upto this the worker A part
 
-            lockB.lock();
+            lockB.lock(); // this is another part that is in hold by another thread.
+            // this worker 1 or thread A is in need to that data too so it is trying to accuire it
 
             try {
                 System.out.println("Worker-1 acquired Lock B");
