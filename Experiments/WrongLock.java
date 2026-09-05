@@ -1,41 +1,41 @@
 /*
-Movie Ticket Booking
+-------------------------The Lock Is on the Wrong Object
 
+Now we're going to intentionally create a bug.
 
+Suppose:
 
-A cinema has ONE seat: A10.
+class BookingTask implements Runnable {
 
-Two customers attempt to book A10 simultaneously.
+    private final Cinema cinema;
 
-Version A
+    public synchronized void book() {
+        cinema.bookSeat();
+    }
+}
 
-One Cinema object:
+You create:
 
 Cinema #1
-   ↑
-   |
-BookingTask #1
-   ↑       ↑
-Thread A Thread B
+    ↑       ↑
+Task #1   Task #2
 
-Both try:
+and:
 
-Book A10
+Thread A → Task #1
+Thread B → Task #2
+Your challenge
 
-Make the booking operation synchronized.
+Determine whether the synchronization actually prevents both tasks from entering book() simultaneously.
 
-Questions
-What is the shared resource?
-What is the shared state?
-What object owns the lock?
-Why can't both successfully book the seat?
+Don't run it first.
+
+Ask:
+
+What object is being locked by synchronized?
+
+That's the question I want you to train yourself to ask every time.
  */
-//---------------------------------- soln -------------------------
-/*
-* the requirement says
-*           have 1 seat
-*           -> 2 people must try to acuire it simultaneously.
-* */
 
 class InsufficiantBalance extends Exception{
     InsufficiantBalance(){
@@ -46,7 +46,7 @@ class InsufficiantBalance extends Exception{
 class Event {
     int seat = 1;
 
-    synchronized void decrement(int nos) {
+    void decrement(int nos) {
         try{
             if(seat < nos) throw new InsufficiantBalance();
             else{
@@ -64,7 +64,7 @@ class Event {
         } catch (InsufficiantBalance e) {
             System.out.println(
                     Thread.currentThread().getName() +" COULD NOT booked the ticket"
-             );
+            );
         }
 
 
@@ -80,12 +80,26 @@ class NewThread  implements Runnable{
         this.nos = nos;
     }
 
-//    Event event = new Event();
+    //    Event event = new Event();
+    synchronized void book() {
+        System.out.println(
+                Thread.currentThread().getName()
+                        + " acquired lock of Task object: "
+                        + this
+        );
+        event.decrement(nos);
+        System.out.println(
+                Thread.currentThread().getName()
+                        + " releasing lock of Task object: "
+                        + this
+        );
+    }
 
     @Override
     public void run() {
 //        try{
-            event.decrement(this.nos);
+
+        book();
 //        }
 //        catch (InsufficiantBalance e) {
 //            System.out.println("Insufficient balance");
@@ -93,7 +107,7 @@ class NewThread  implements Runnable{
 
     }
 }
-class MovieTicketExp1{
+class WrongLock{
     public static void main(String[] args) throws InterruptedException{
         Event event = new Event();
 
@@ -115,10 +129,11 @@ class MovieTicketExp1{
 }
 
 /*
-------------output------------
-java MovieTicketExp1
-
+worker2 acquired lock of Task object: NewThread@412be3e4
+worker1 acquired lock of Task object: NewThread@27cda136
 worker1 has booked the ticket
-worker2 COULD NOT booked the ticket
+worker2 has booked the ticket
+worker1 releasing lock of Task object: NewThread@27cda136
+worker2 releasing lock of Task object: NewThread@412be3e4
 
  */
