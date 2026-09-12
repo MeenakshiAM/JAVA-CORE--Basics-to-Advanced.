@@ -46,7 +46,7 @@ class Worker2 implements Runnable {
 
         try {
 
-            if (lock.tryLock(2, TimeUnit.SECONDS)) {
+            if (lock.tryLock(2, TimeUnit.SECONDS)) {// tries for 2 sec and then if it is released it will use it else moveon
 
                 try {
                     System.out.println("Worker-2 acquired the lock");
@@ -95,4 +95,25 @@ Worker-2 trying to acquire the lock
 Worker-2 could NOT acquire the lock within 2 seconds
 Worker-1 released the lock
 
+
+            tryLock()
+                ↓
+            Try immediately
+                ↓
+            No → false
+
+
+            tryLock(2, SECONDS)
+                ↓
+            Try immediately
+                ↓
+            No
+                ↓
+            Wait up to 2 seconds
+                ↓
+            Got it? ── YES → true
+                │
+                NO
+                ↓
+            false
  */
