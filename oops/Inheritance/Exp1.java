@@ -50,7 +50,12 @@ class Employee {
 
     void giveRaise(double percentage){
         Double r = this.getSalary()+(this.getSalary()*(percentage/100));
-        System.out.println("the raise got is : "+ r);
+        this.setSalary(r);
+        System.out.println("the raise got is : "+ this.getSalary());
+    }
+
+    boolean isHighEarner(){
+        return this.getSalary() > 75000;
     }
 }
 
@@ -73,7 +78,9 @@ class Developer extends Employee {
     void writeCode() {
         System.out.println(this.getName() + " writes code in " + this.getProgLang());
     }
-
+    void debugCode(){
+        System.out.println(this.getName() + " debug code in " + this.getProgLang());
+    }
 }
 
 // ---------- tester ---------
@@ -108,6 +115,6 @@ class Exp1 {
         d1.calculateAnnualSalary();// inherited
         d1.giveRaise(10);         // inherited
         d1.writeCode();           // Developer's own
-
+        System.out.println(d1.isHighEarner());
     }
 }
