@@ -1,4 +1,4 @@
-# Important Notes - Inheritance 
+# Important Notes - Polymorphism
 
 ---
 
