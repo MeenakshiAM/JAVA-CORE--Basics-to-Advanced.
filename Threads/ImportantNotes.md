@@ -1,0 +1,3 @@
+# Important Notes - Thread...
+
+- when u need to use the common function we must use 1 object of the thread operation it will create the 
