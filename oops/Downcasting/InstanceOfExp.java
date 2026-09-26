@@ -38,16 +38,22 @@ public class InstanceOfExp {
             d.work();
             d.writeCode();
         }
-        System.out.println(e1 instanceof Employee);
-        System.out.println(e1 instanceof Developer);
-        System.out.println(e1 instanceof Tester);
 
-        System.out.println(e2 instanceof Employee);
-        System.out.println(e2 instanceof Developer);
-        System.out.println(e2 instanceof Tester);
+        if(e2 instanceof Tester){
+             Tester d = (Tester) e2;
+            d.work();
+            d.writeCode();
+        }
 
-        System.out.println(e3 instanceof Employee);
-        System.out.println(e3 instanceof Developer);
-        System.out.println(e3 instanceof Tester);
+
     }
 }
+
+/*
+------------------output--------------
+Developer works
+Developer writes code
+Tester works
+Tester writes code
+
+ */
