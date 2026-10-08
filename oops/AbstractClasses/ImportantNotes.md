@@ -30,7 +30,7 @@ if `Developer extends Employee`.
 
 ---
 
-# 2. Why do we need an abstract class?
+### 2. Why do we need an abstract class?
 
 Consider:
 
@@ -77,20 +77,20 @@ new Tester();      // ✓
 
 You already correctly noticed this.
 
-```java
+```
 class Developer extends Employee {
 }
 ```
 
 allows:
 
-```java
+```
 Developer d = new Developer();
 ```
 
 There is no need to separately do:
 
-```java
+```
 Employee e = new Employee();
 ```
 
@@ -98,7 +98,7 @@ The purpose of `abstract` is to **prevent direct instantiation of the parent**, 
 
 ---
 
-# 3. Can an abstract class contain implemented methods?
+## 3. Can an abstract class contain implemented methods?
 
 ## YES! Absolutely.
 
@@ -108,7 +108,7 @@ An abstract class can contain **normal, fully implemented methods**.
 
 For example:
 
-```java
+```
 abstract class Employee {
 
     void displayDetails() {
@@ -121,14 +121,14 @@ This is completely valid.
 
 A `Developer` inherits that implementation:
 
-```java
+```
 class Developer extends Employee {
 }
 ```
 
 So:
 
-```java
+```
 Developer d = new Developer();
 d.displayDetails();
 ```
@@ -190,7 +190,7 @@ class Tester extends Employee {
 
 This is the important mental model:
 
-```java
+```
 abstract class Employee {
 
     // implemented method
@@ -205,7 +205,7 @@ abstract class Employee {
 
 So:
 
-```text
+```
                 Employee
            abstract class
                  |
@@ -235,11 +235,11 @@ AND
 
 ---
 
-# 6. What happens if the child doesn't implement an abstract method?
+## 6. What happens if the child doesn't implement an abstract method?
 
 Suppose:
 
-```java
+```
 abstract class Employee {
 
     abstract void work();
@@ -248,7 +248,7 @@ abstract class Employee {
 
 Then:
 
-```java
+```
 class Developer extends Employee {
 }
 ```
@@ -266,7 +266,7 @@ Therefore, `Developer` must either:
 
 For example:
 
-```java
+```
 abstract class Developer extends Employee {
 }
 ```
@@ -275,42 +275,42 @@ Now Developer is also incomplete, so it doesn't have to implement `work()` yet.
 
 ---
 
-# 7. Abstract class vs normal class
+## 7. Abstract class vs normal class
 
 ### Normal class
 
-```java
+```
 class Employee {
 }
 ```
 
 You can do:
 
-```java
+```
 Employee e = new Employee(); // ✓
 ```
 
 ### Abstract class
 
-```java
+```
 abstract class Employee {
 }
 ```
 
 You cannot:
 
-```java
+```
 Employee e = new Employee(); // ❌
 ```
 
 But inheritance still works:
 
-```java
+```
 class Developer extends Employee {
 }
 ```
 
-```java
+```
 Developer d = new Developer(); // ✓
 ```
 

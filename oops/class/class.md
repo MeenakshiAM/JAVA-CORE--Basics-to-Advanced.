@@ -14,3 +14,28 @@
 Would you like to see a code example showing how to put multiple non-public classes inside a single Java file?
 AI responses may include mistakes.
 
+## static &non static class
+
+The core distinction is:
+
+Non-static
+
+Belongs to an object.
+
+s1.name
+
+You're asking:
+
+"What is the name belonging to this particular Student?"
+
+Static
+
+Belongs to the class.
+
+Student.studentCount
+
+You're asking:
+
+"What is the student count associated with the Student class?"
+
+
