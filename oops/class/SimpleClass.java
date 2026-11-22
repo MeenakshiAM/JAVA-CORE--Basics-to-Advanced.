@@ -13,7 +13,8 @@ class Book {
 
         this.price = price;
     }
-
+// these are called as the getters and setters ..
+    // these must be defined in public so that other classes can acces it ..
     public void setAuthor(String author) {
         this.author = author;
     }
@@ -36,7 +37,7 @@ class Book {
 
     void displayDetails(){
         System.out.println(
-                "title : " +this.title+ "  Author : "+ this.author+" Price : "+ this.price
+                "title : " +this.title+ "  Author : "+ this.author+" Price : "+ this.getPrice()
         );
     }
 }

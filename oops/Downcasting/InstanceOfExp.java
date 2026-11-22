@@ -56,4 +56,14 @@ Developer writes code
 Tester works
 Tester writes code
 
+
+------------------- explanation ----------------------
+this is becoz java allows the IS A relationship in Inheritance.
+ie when dev and tester is an inherited object they are like
+dev IS An employee
+TesterIS AN employee
+employee Is an employee.
+
+
+instanceOf keyword basically checks if the two are related to each other.
  */

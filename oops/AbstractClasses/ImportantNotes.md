@@ -340,7 +340,7 @@ The parent `Employee` is useful as a **common abstraction**, but your design may
 
 A normal class permits:
 
-```java
+```
 new Employee();
 ```
 
@@ -360,7 +360,7 @@ And abstract methods can additionally enforce:
 
 When you see:
 
-```java
+```
 abstract class Employee
 ```
 
@@ -368,7 +368,7 @@ think:
 
 ### Purpose 1 — Prevent direct instantiation
 
-```java
+```
 new Employee(); // ❌
 ```
 
@@ -376,7 +376,7 @@ new Employee(); // ❌
 
 The class can contain:
 
-```java
+```
 // common implementation
 void displayDetails() { ... }
 

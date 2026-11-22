@@ -152,8 +152,9 @@ tester has overriden the method
             Employee e3 = new Employee("abc", "222", 40000.0);
         System.out.println("------------------Runtime Polymorphysm checking-------- ");
             e1.displayDetails();
+            e1.getSalary();
             e2.displayDetails();
-        e2.displayDetails("-----Tester 2 ");
+       // e2.displayDetails("-----Tester 2 ");
         e3.displayDetails();
 
     }

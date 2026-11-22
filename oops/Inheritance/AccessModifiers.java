@@ -30,7 +30,8 @@ class AccessModifiers {
         System.out.println(p.publicValue);
         System.out.println(p.protectedValue);
         System.out.println(p.defaultValue);
-       // System.out.println(p.privateValue);
+        //System.out.println(p.privateValue); the private value can only be used in that specific block
+        // you cannot use it even in the main eventhough it is the reference type of the same
 
         Child c = new Child();
         c.childTest();

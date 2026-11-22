@@ -10,7 +10,7 @@ class Book {
     central place.
      */
     public Book(){
-        this("unknown", "unknown", 0.0);
+        this("unknown", "unknown", 0.0);// set the default value in the default constructor uch tht even if the otheres are not callr the basic implementation will work.
     }
 
     Book(String title){
