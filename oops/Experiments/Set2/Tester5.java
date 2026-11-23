@@ -57,14 +57,84 @@ class HealthPolicy extends InsurancePolicy {
     public Boolean validateMembers() {
         // write your code here
 
+        if(memberAges == null|| this.memberAges.length <1 || this.getMemberAges().length > 6){
+            return false;
+        }
+
+        for(int i :  this.getMemberAges()){
+            if(i <0 || i>80) return false;
+        }
         // change return statement accordingly
-        return null;
+
+
+
+
+        return true;
     }
 
     // To_Trainee
     @Override
     public void calculatePremium() {
         // write your code here
+        super.calculatePremium();
+
+        float basicPremium  = super.getPremium();
+
+        if(basicPremium == -1.0f || !this.validateMembers()){
+            super.setPremium(-1.0f);
+        }
+        else {
+
+            float ageCharge = 0.0f;
+            for(int i : this.getMemberAges()){
+                if(i <= 25) ageCharge += 1000.0f;
+                else if (i >= 26 && i<=45) {
+                    ageCharge += 2500.0f;
+
+                } else if (i >=46 && i<=60) {
+                    ageCharge += 5000.0f;
+
+                } else if (i>60) {
+                    ageCharge += 9000.0f;
+
+                }
+            }
+            //if(this.memberAges[i] <= 25)
+
+            boolean flag = false;
+            int idx = -1;
+            float totalLoadingPercent = 0.0f;
+            if(conditions!= null) {
+                boolean[] check = new boolean[HealthPolicy.conditionLoadingArr[0].length];
+                for (int i = 0; i < this.getConditions().length; i++) {
+                    String s = this.getConditions()[i];
+                    flag = false;
+                    for (int j = 0; j < HealthPolicy.conditionLoadingArr[0].length; j++) {
+                        String s1 = HealthPolicy.conditionLoadingArr[0][j];
+
+                        if (s != null && s.equalsIgnoreCase(s1) && !check[j]) {
+                            flag = true;
+                            check[j] = true;
+                            idx = j;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        float loadingPercent = Integer.parseInt(HealthPolicy.conditionLoadingArr[1][idx]);
+                        totalLoadingPercent += loadingPercent;
+
+                    }
+
+                }
+            }
+            if(totalLoadingPercent > 30) totalLoadingPercent = 30;
+            float loadingAmount =  totalLoadingPercent/100.0f * basicPremium;
+            float totalPremium = basicPremium + ageCharge+ loadingAmount;
+
+            if( getMemberAges().length >= 4) totalPremium -= 0.1f*totalPremium;
+
+            this.setPremium(totalPremium);
+        }
     }
 
     @Override
@@ -91,6 +161,12 @@ class VehiclePolicy extends InsurancePolicy {
     public int identifyOwnDamageRate() {
         int damageRate = 0;
         // write your code here
+        if(this.vehicleType == 'C' || this.vehicleType == 'c') damageRate = 3;
+        else if(this.vehicleType == 'B' || this.vehicleType =='b') damageRate = 2;
+        else if(this.vehicleType == 'T' || this.vehicleType == 't') damageRate = 5;
+        else{
+            damageRate = -1;
+        }
         return damageRate;
     }
 
@@ -98,6 +174,31 @@ class VehiclePolicy extends InsurancePolicy {
     @Override
     public void calculatePremium() {
         // write your code here
+
+        super.calculatePremium();
+        float thirdPartyPremium = super.getPremium();
+
+        int damageRate = this.identifyOwnDamageRate();
+
+        if(thirdPartyPremium == -1.0f || damageRate == -1 || vehicleAge <0 || vehicleAge >15 || noClaimYears < 0){
+            super.setPremium(-1.0f);
+        }
+        else{
+            float ownDamage =damageRate/100.0f * super.getSumInsured();
+            if(vehicleAge >=6 && vehicleAge <= 10){
+                ownDamage -= 0.20f * ownDamage;
+            }
+            if(vehicleAge >=11 && vehicleAge <=15){
+                ownDamage -= 0.4f * ownDamage;
+            }
+
+            int ncbPercent  = 10* this.noClaimYears;
+
+            if(ncbPercent >50) ncbPercent = 50;
+
+            ownDamage-=ownDamage * ncbPercent/100.0f;
+            super.setPremium(ownDamage+thirdPartyPremium);
+        }
     }
 
     @Override
@@ -108,7 +209,7 @@ class VehiclePolicy extends InsurancePolicy {
     }
 }
 
-class Tester {
+class Tester5 {
     public static void main(String[] args) {
         int[] ages1 = {30, 28, 5, 62};
         String[] c1 = {"diabetes", "Asthma", "DIABETES", null, "Allergy"};
